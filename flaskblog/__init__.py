@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -9,9 +10,10 @@ basedir = os.path.abspath(os.path.dirname(__file__))  # Get the directory where 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "site.db")
 # this should be kept as an environment variable
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 from flaskblog import routes
