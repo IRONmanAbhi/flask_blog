@@ -15,7 +15,6 @@ class User(db.Model):
     
 class Posts(db.Model):
     Pid = db.Column(db.Integer, primary_key=True)
-    # author = db.Column(db.String(15), nullable=False, unique=True)
     title = db.Column(db.String(70), nullable=False)
     content = db.Column(db.Text, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
