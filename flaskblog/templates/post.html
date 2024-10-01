@@ -4,7 +4,7 @@
                 <img class="rounded-circle article-img" src="{{ url_for("static", filename="profile_pics/" + post.author.img_file) }}">
 			    <div class="media-body">
 		    		<div class="article-metadata d-flex justify-content-between">
-				        <a class="mr-2" href="#" style="color:inherit; text-decoration: none;">{{ post.author.username }}</a>
+				        <a class="mr-2" href="{{ url_for("user_posts", username=post.author.username) }}" style="color:inherit; text-decoration: none;">{{ post.author.username }}</a>
 				        <small class="text-muted" style="padding-left: 10px;">{{ post.date_posted.strftime("%B %Y, %d") }}</small>
                         {% if(post.edited == true) %}
 							<small class="text-muted">Edited</small>

@@ -1,11 +1,21 @@
 {% extends "layout.html" %} 
 	{% block content %} 
+    <div class="content-section">
+        <h1>Posts By:</h1><br>
+        <div class="media d-flex">
+            <img class="rounded-circle user-img" src="{{ url_for("static", filename="profile_pics/" + user.img_file) }}">
+          <div class="media-body">
+            <h2 class="account-heading">{{ current_user.username }}</h2>
+            <h5 class="text-secondary">{{ current_user.email }}</h5>
+            <p class="text-secondary">Total Posts: {{ posts.total }}</p>
+          </div>
+        </div>
+
 		{% for post in posts.items %}
 		<article class="media content-section align-self-stretch">
-			<img class="rounded-circle article-img" src="{{ url_for("static", filename="profile_pics/" + post.author.img_file) }}">
 			<div class="media-body">
 			  <div class="article-metadata d-flex justify-content-between">
-				<a class="mr-2" href="{{ url_for("user_posts", username=post.author.username) }}" style="color:inherit; text-decoration: none;">{{ post.author.username }}</a>
+				<a class="mr-2" href="#" style="color:inherit; text-decoration: none;">{{ post.author.username }}</a>
 				<small class="text-muted">{{ post.date_posted.strftime("%B %Y, %d") }}</small>
 				{% if(post.edited == true) %}
 				  <small class="text-muted">Edited</small>
@@ -19,12 +29,13 @@
 		{% for pageNum in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
 		  {% if(pageNum) %}
 		  	{% if(posts.page == pageNum) %}
-		  		<a class="btn btn-info mb-4" href="{{ url_for("home", page=pageNum) }}">{{ pageNum }}</a>
+		  		<a class="btn btn-info mb-4" href="{{ url_for("user_posts", username=user.username, page=pageNum) }}">{{ pageNum }}</a>
 	  		{% else %}
-			  	<a class="btn btn-outline-info mb-4" href="{{ url_for("home", page=pageNum) }}">{{ pageNum }}</a>
+			  	<a class="btn btn-outline-info mb-4" href="{{ url_for("user_posts", username=user.username, page=pageNum) }}">{{ pageNum }}</a>
 	  		{% endif %}
 		  {% else %}
 		  	..
 		  {% endif %}
 		{% endfor %}
+    </div>
 	{% endblock content %}
