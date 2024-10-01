@@ -88,3 +88,10 @@ a.article-title:hover {
   height: 250px;
   resize: none;
 }
+
+.user-img{
+  height: 125px;
+  width: 125px;
+  margin-right: 16px;
+  padding-bottom: 10px;
+}
