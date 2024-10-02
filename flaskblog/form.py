@@ -54,3 +54,19 @@ class postForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     content = TextAreaField("Content", validators=[DataRequired()])
     submit = SubmitField("Post")
+    
+    
+class requestResetForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Request Reset Password")
+    
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if(user is None):
+            raise ValidationError("No Account is associated with this email!")
+    
+
+class resetPasswordForm(FlaskForm):
+    password = PasswordField("Password", validators=[DataRequired()])
+    confirmPass = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")]) # name of qualto validator variable must be passed as a string
+    submit = SubmitField("Reset Password")
