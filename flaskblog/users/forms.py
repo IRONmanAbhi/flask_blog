@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, PasswordField, BooleanField
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from flaskblog.models import User, Posts
+from flaskblog.models import User
 from flask_login import current_user
 
 
@@ -10,7 +10,7 @@ class registrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), Length(min=2, max=15)])
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
-    confirmPass = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")]) # name of qualto validator variable must be passed as a string
+    confirmPass = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo("password")]) # name of equalto validator variable must be passed as a string
     submit = SubmitField("Sign Up")
     
     def validate_username(self, username):
@@ -49,13 +49,6 @@ class accountUpdateForm(FlaskForm):
             if(user):
                 raise ValidationError("Account associated with this email already exists.")
             
-
-class postForm(FlaskForm):
-    title = StringField("Title", validators=[DataRequired()])
-    content = TextAreaField("Content", validators=[DataRequired()])
-    submit = SubmitField("Post")
-    
-    
 class requestResetForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
     submit = SubmitField("Request Reset Password")

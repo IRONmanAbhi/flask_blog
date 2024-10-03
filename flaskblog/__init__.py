@@ -1,30 +1,29 @@
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
-import os
 from flask_login import LoginManager
-from datetime import timedelta
-from dotenv import load_dotenv
 from flask_mail import Mail
+from flaskblog.config import Config
 
-load_dotenv() 
 
-app = Flask(__name__)
-
-app.config["SECRET_KEY"] = os.getenv('SECRET_KEY')
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('DATABASE_URL')
-app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=60)
-app.config["MAIL_SERVER"] = os.getenv('MAIL_SERVER')
-app.config["MAIL_PORT"] = os.getenv('MAIL_PORT')
-app.config["MAIL_USE_SSL"] = True
-app.config["MAIL_USERNAME"] = os.getenv('MAIL_USER')
-app.config["MAIL_PASSWORD"] = os.getenv('MAIL_PASSWORD')
-# this should be kept as an environment variable
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
-login_manager.login_view = "login"
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
+login_manager.login_view = "users.login"
 login_manager.login_message_category = "info"
-mail = Mail(app)
+mail = Mail()
 
-from flaskblog import routes
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
+    from flaskblog.users.routes import users
+    from flaskblog.posts.routes import posts
+    from flaskblog.main.routes import main
+    app.register_blueprint(users)
+    app.register_blueprint(posts)
+    app.register_blueprint(main)
+    return app

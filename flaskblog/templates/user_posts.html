@@ -21,7 +21,7 @@
 				  <small class="text-muted">Edited</small>
 				{% endif %}
 			  </div>
-			  <h2><a class="article-title" href="{{ url_for('post', post_id=post.Pid) }}">{{ post.title }}</a></h2>
+			  <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.Pid) }}">{{ post.title }}</a></h2>
 			  <p class="article-content">{{ post.content }}</p>
 			</div>
 		  </article>	
@@ -29,9 +29,9 @@
 		{% for pageNum in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
 		  {% if(pageNum) %}
 		  	{% if(posts.page == pageNum) %}
-		  		<a class="btn btn-info mb-4" href="{{ url_for("user_posts", username=user.username, page=pageNum) }}">{{ pageNum }}</a>
+		  		<a class="btn btn-info mb-4" href="{{ url_for("users.user_posts", username=user.username, page=pageNum) }}">{{ pageNum }}</a>
 	  		{% else %}
-			  	<a class="btn btn-outline-info mb-4" href="{{ url_for("user_posts", username=user.username, page=pageNum) }}">{{ pageNum }}</a>
+			  	<a class="btn btn-outline-info mb-4" href="{{ url_for("users.user_posts", username=user.username, page=pageNum) }}">{{ pageNum }}</a>
 	  		{% endif %}
 		  {% else %}
 		  	..

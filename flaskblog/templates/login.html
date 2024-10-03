@@ -40,7 +40,7 @@
         {{ form.remember.label(class="form-check-label") }}
       </div>
 
-      <small class="text-muted ml-2"> <a href="{{ url_for("reset_request") }}">Forgot Password ?</a></small>
+      <small class="text-muted ml-2"> <a href="{{ url_for("users.reset_request") }}">Forgot Password ?</a></small>
 
       <div class="form-group pt-3 pb-3">
         {{ form.submit(class="btn btn-outline-info") }}
@@ -51,7 +51,7 @@
   </form>
   <div class="border-top pt-3 pb-2">
     <small class="text-muted">
-      New User ? <a class="ml-1" href="{{ url_for('register') }}"> Sign Up Now</a>
+      New User ? <a class="ml-1" href="{{ url_for('users.register') }}"> Sign Up Now</a>
     </small>
   </div>
 </div>
